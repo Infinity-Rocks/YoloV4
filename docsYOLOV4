@@ -1,0 +1,84 @@
+How to run yolov4?
+
+IMG ./darknet detector test ./cfg/coco.data ./cfg/yolov4.cfg ./yolov4.weights
+VDO python3 darknet_video.py --input <file name>
+CAM python3 darknet_video.py
+
+LINKS USED 	
+
+ALEXYAB-------------> https://github.com/AlexeyAB/darknet
+--------------------------------------------------------------------------------------------------------------------------------
+OPENCV------------->  https://efcomputer.net.au/blog/4-steps-to-install-darknet-with-cuda-and-opencv-for-realtime-object-detection/
+
+follow this link
+https://stackoverflow.com/questions/28776053/opencv-gtk2-x-error
+
+THIS IS A COMPULSORY STEP:
+/*
+First check whether libgtk2.0-dev is installed properly. If you have installed aptitude package manager, run the following:
+
+sudo aptitude search libgtk2.0-dev
+It should return like this:
+
+i  libgtk2.0-dev              - development files for the GTK+ library 
+p  libgtk2.0-dev:i386         - development files for the GTK+ library
+You need to build the files once again.Locate your OpenCV folder. Create a new folder and name it as release. Enter into this folder. For example
+
+cd /home/user_name/OpenCv
+mkdir Release
+cd Release
+Now build using cmake with following command:
+
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_GTK=ON -D WITH_OPENGL=ON ..
+Remember to put WITH_GTK=ON during cmake. After this step enter the command,
+
+make
+sudo make install
+This should resolve your problem.If you have broken dependencies for libgtk2.0-dev, then install a fresh copy of libgtk2.0-dev using aptitude.
+
+sudo aptitude install libgtk2.0-dev
+
+*/
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+CUDA && CUDNN -------------> https://gist.github.com/Mahedi-61/2a2f1579d4271717d421065168ce6a73 
+(note : we have used cudnn 8 and cuda 10.2 and gcc version 8)
+(note : dont ever purge anything )
+(note : set nvcc in makefile as per opencv link)
+(note : set nvcc in makefile as per opencv link)
+
+*********************** IN CASE/MUST BE DONE ***********************
+if this is the error : "fatal error: cudnn_version.h: No such file or directory " 
+then take the following steps :
+####
+
+sudo cp cuda/include/cudnn*.h /usr/local/cuda/include  
+
+sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64  
+
+sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn* 
+
+(note: pwd should be cudnn installation folder)
+
+####
+(note : cuda-10.2/cudnn should be downloaded from nvidia official website.)
+NOTE:
+1) GPU=1 and CUDNN=1 shall only detect and show bb correctly 
+2) only OPENCV=1 can work but will slow 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+############################################ TRAIN CUSTOM MODEL #################################################################
+CMDS:
+
+./darknet detector train data/obj.data cfg/yolo-obj.cfg backup/yolo-obj_last.weights 
+
+./darknet detector train data/obj.data cfg/yolo-obj.cfg yolov4.conv.137 
+
+./darknet detector train build/darknet/x64/data/obj.data build/darknet/x64/cfg/yolo-obj.cfg build/darknet/x64/yolov4.conv.137 
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
