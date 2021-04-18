@@ -30,6 +30,15 @@ cd Release
 Now build using cmake with following command:
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_GTK=ON -D WITH_OPENGL=ON ..
+
+for grstreamer
+
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_GTK=ON -D WITH_OPENGL=ON -D WITH_GSTREAMEAR=ON  -D VIDEOIO_PLUGIN_LIST=gstreamer ..
+
+for ffmpeg
+
+-D WITH_FFMPEG=1 ..
+
 Remember to put WITH_GTK=ON during cmake. After this step enter the command,
 
 make
@@ -77,6 +86,10 @@ CMDS:
 ./darknet detector train build/darknet/x64/data/obj.data build/darknet/x64/cfg/yolo-obj.cfg build/darknet/x64/yolov4.conv.137 
 
 ./darknet detector test data/obj.data cfg/yolo-obj.cfg backup/yolo-obj_last.weights
+
+python3 darknet_video.py --input cat.mp4  --weights backup/yolo-obj_last.weights --config_file cfg/yolo-obj.cfg --data_file data/obj.data
+
+
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
