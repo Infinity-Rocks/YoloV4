@@ -1,2 +1,2 @@
 # YoloV4
-Private repository for implementation of yolov4
+Implementation of yolov4
